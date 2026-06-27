@@ -21,7 +21,7 @@ impl MenuBar {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         egui::TopBottomPanel::top("menu_bar").show(ctx, |ui| {
             egui::MenuBar::new().ui(ui, |ui| {
                 self.file_menu(ui, app);
@@ -39,7 +39,7 @@ impl MenuBar {
         self.show_dialogs(ctx, app);
     }
 
-    fn file_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn file_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("File", |ui| {
             if ui.button("New Project").clicked() {
                 app.handle_action(AppAction::NewProject);
@@ -114,7 +114,7 @@ impl MenuBar {
         });
     }
 
-    fn edit_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn edit_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Edit", |ui| {
             let has_undo = !app.undo_stack.is_empty();
             let has_redo = !app.redo_stack.is_empty();
@@ -185,7 +185,7 @@ impl MenuBar {
         });
     }
 
-    fn view_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn view_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("View", |ui| {
             if ui.checkbox(&mut app.mixer_ui.visible, "Mixer").clicked() {
                 ui.close();
@@ -268,7 +268,7 @@ impl MenuBar {
         });
     }
 
-    fn track_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn track_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Track", |ui| {
             if ui.button("Add Audio Track").clicked() {
                 app.add_audio_track();
@@ -306,7 +306,7 @@ impl MenuBar {
         });
     }
 
-    fn transport_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn transport_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Transport", |ui| {
             if ui.button("Play/Stop").clicked() {
                 app.transport_ui.toggle_playback(&app.command_tx);
@@ -428,7 +428,7 @@ impl MenuBar {
         });
     }
 
-    fn tools_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn tools_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Tools", |ui| {
             if ui.button("Plugin Manager...").clicked() {
                 app.dialogs.show_plugin_manager();
@@ -498,7 +498,7 @@ impl MenuBar {
         });
     }
 
-    fn window_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn window_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Window", |ui| {
             if ui.button("Mixer").clicked() {
                 app.mixer_ui.toggle_visibility();
@@ -534,7 +534,7 @@ impl MenuBar {
         });
     }
 
-    fn help_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn help_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.menu_button("Help", |ui| {
             // if ui.button("User Manual").clicked() {
             //     // TODO: Open user manual
@@ -548,26 +548,26 @@ impl MenuBar {
 
             ui.separator();
 
-            if ui.button("About YADAW").clicked() {
+            if ui.button("About redaw").clicked() {
                 self.show_about = true;
                 ui.close();
             }
         });
     }
 
-    fn show_dialogs(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    fn show_dialogs(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         // About dialog
         if self.show_about {
-            egui::Window::new("About YADAW")
+            egui::Window::new("About redaw")
                 .open(&mut self.show_about)
                 .resizable(false)
                 .show(ctx, |ui| {
                     ui.vertical_centered(|ui| {
-                        ui.heading("Yadaw");
+                        ui.heading("redaw");
                         ui.label("Yet Another DAW");
                         ui.separator();
                         ui.label("A trial at a daw that doesn't crash often");
-                        ui.hyperlink("https://github.com/mlm-games/yadaw");
+                        ui.hyperlink("https://github.com/mlm-games/redaw");
                     });
                 });
         }

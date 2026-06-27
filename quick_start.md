@@ -1,4 +1,4 @@
-# YADAW Quick Start
+# redaw Quick Start
 
 ## Recording Audio
 
@@ -79,7 +79,7 @@ Exports to WAV only.
 **Plugins not showing?**
 - Verify they're CLAP or LV2 format (not VST)
 - Check plugin paths in settings
-- Restart YADAW after installing new plugins
+- Restart redaw after installing new plugins
 
 **MIDI not working?**
 - Check MIDI input device is selected
@@ -93,7 +93,7 @@ Exports to WAV only.
 - Set loop markers to work on specific sections
 - Save frequently with Ctrl+S
 
-For more help, check the video tutorial below or [open an issue](https://github.com/mlm-games/yadaw/issues).
+For more help, check the video tutorial below or [open an issue](https://github.com/mlm-games/redaw/issues).
 
 
 ### Get-started via a video

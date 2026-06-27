@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.mlm_games.yadaw</id>
-  <name>YADAW</name>
+  <id>io.github.mlm_games.redaw</id>
+  <name>redaw</name>
   <summary>Digital Audio Workstation for prototyping</summary>
   <developer id="io.github.mlm_games">
     <name>MLM Games</name>
@@ -10,7 +10,7 @@
   <project_license>AGPL-3.0-or-later</project_license>
   <description>
     <p>
-      Yadaw is a minimal rust-based digital audio workstation built to not crash as much as the alternatives. It mainly depends on external plugins,
+      redaw is a minimal rust-based digital audio workstation built to not crash as much as the alternatives. It mainly depends on external plugins,
       and has no inbuilt plugins of its own to keep the base light.
     </p>
     <p>Features:</p>
@@ -27,12 +27,12 @@
       No MP3/FLAC export (WAV only).
     </p>
   </description>
-  <launchable type="desktop-id">io.github.mlm_games.yadaw.desktop</launchable>
-  <url type="homepage">https://github.com/mlm-games/yadaw</url>
-  <url type="bugtracker">https://github.com/mlm-games/yadaw/issues</url>
-  <url type="vcs-browser">https://github.com/mlm-games/yadaw</url>
+  <launchable type="desktop-id">io.github.mlm_games.redaw.desktop</launchable>
+  <url type="homepage">https://github.com/mlm-games/redaw</url>
+  <url type="bugtracker">https://github.com/mlm-games/redaw/issues</url>
+  <url type="vcs-browser">https://github.com/mlm-games/redaw</url>
   <url type="donation">https://github.com/sponsors/mlm-games</url>
-  <url type="help">https://github.com/mlm-games/yadaw/blob/master/quick_start.md</url>
+  <url type="help">https://github.com/mlm-games/redaw/blob/master/quick_start.md</url>
   <branding>
     <color type="primary" scheme_preference="light">#4a90d9</color>
     <color type="primary" scheme_preference="dark">#1c4a7e</color>
@@ -40,15 +40,15 @@
   <screenshots>
     <screenshot type="default">
       <caption>Main interface</caption>
-      <image>https://raw.githubusercontent.com/mlm-games/yadaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/4.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/redaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/4.png</image>
     </screenshot>
     <screenshot>
       <caption>Piano roll editor</caption>
-      <image>https://raw.githubusercontent.com/mlm-games/yadaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/2.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/redaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/2.png</image>
     </screenshot>
     <screenshot>
       <caption>Multi-track view</caption>
-      <image>https://raw.githubusercontent.com/mlm-games/yadaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/1.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/redaw/master/fastlane/metadata/android/en-US/images/tvScreenshots/1.png</image>
     </screenshot>
   </screenshots>
   <releases>
@@ -172,7 +172,7 @@
     <control>touch</control>
   </supports>
   <provides>
-    <binary>yadaw</binary>
+    <binary>redaw</binary>
     <mediatype>audio/wav</mediatype>
     <mediatype>audio/x-wav</mediatype>
   </provides>

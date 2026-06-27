@@ -1,5 +1,5 @@
 use anyhow::{Result, anyhow};
-use yadaw_plugin_api::{BackendKind, HostConfig, PluginBackend, PluginInstance, UnifiedPluginInfo};
+use redaw_plugin_api::{BackendKind, HostConfig, PluginBackend, PluginInstance, UnifiedPluginInfo};
 
 pub struct HostFacade {
     backends: Vec<Box<dyn PluginBackend>>,

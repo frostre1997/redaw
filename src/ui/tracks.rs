@@ -8,7 +8,7 @@ use crate::model::PluginDescriptor;
 use crate::model::automation::AutomationTarget;
 use crate::model::track::TrackType;
 use crate::plugin::get_control_port_info;
-use yadaw_plugin_api::{BackendKind, ParamKind};
+use redaw_plugin_api::{BackendKind, ParamKind};
 
 pub struct TracksPanel {
     track_meters: HashMap<u64, LevelMeter>,
@@ -49,7 +49,7 @@ impl TracksPanel {
         }
     }
 
-    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.horizontal(|ui| {
             ui.heading("Tracks");
             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -84,7 +84,7 @@ impl TracksPanel {
         });
     }
 
-    fn draw_track_list(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_track_list(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         let mut track_actions = Vec::new();
         let mut automation_actions = Vec::new();
 
@@ -169,7 +169,7 @@ impl TracksPanel {
         ui: &mut egui::Ui,
         track_id: u64,
         is_selected: bool,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
         mut on_action: impl FnMut(&'a str),
     ) -> egui::Response {
         let (name, is_midi, is_frozen, track_color, group_info) = {
@@ -325,7 +325,7 @@ impl TracksPanel {
         drag_resp.union(inner.response)
     }
 
-    fn draw_mixer_strip(&mut self, ui: &mut egui::Ui, track_id: u64, app: &super::app::YadawApp) {
+    fn draw_mixer_strip(&mut self, ui: &mut egui::Ui, track_id: u64, app: &super::app::redawApp) {
         let (mut volume, mut pan, muted, solo, armed, monitor_enabled, is_midi) = {
             let state = app.state.lock().unwrap();
             state
@@ -420,7 +420,7 @@ impl TracksPanel {
         &self,
         ui: &mut egui::Ui,
         track_id: u64,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
     ) -> Option<(u64, AutomationTarget)> {
         let mut action = None;
         let (plugin_chain, num_lanes) = {
@@ -474,7 +474,7 @@ impl TracksPanel {
         &mut self,
         ui: &mut egui::Ui,
         track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         ui.separator();
         ui.horizontal(|ui| {
@@ -653,7 +653,7 @@ impl TracksPanel {
     fn draw_lv2_params(
         &self,
         ui: &mut egui::Ui,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
         track_id: u64,
         plugin_id: u64,
         plugin_uri: &str,
@@ -724,7 +724,7 @@ impl TracksPanel {
     fn draw_clap_params(
         &self,
         ui: &mut egui::Ui,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
         track_id: u64,
         plugin_id: u64,
         plugin_idx: usize,
@@ -751,7 +751,7 @@ impl TracksPanel {
                               params: &HashMap<String, f32>,
                               track_id: u64,
                               plugin_id: u64,
-                              app: &super::app::YadawApp| {
+                              app: &super::app::redawApp| {
                 let mut v = params.get(&pinfo.name).copied().unwrap_or(pinfo.current);
 
                 let is_readonly = pinfo.is_readonly;
@@ -959,7 +959,7 @@ impl TracksPanel {
         }
     }
 
-    fn draw_io_section(&self, ui: &mut egui::Ui, track_id: u64, app: &mut super::app::YadawApp) {
+    fn draw_io_section(&self, ui: &mut egui::Ui, track_id: u64, app: &mut super::app::redawApp) {
         let track = {
             let state = app.state.lock().unwrap();
             state.tracks.get(&track_id).cloned()
@@ -1067,7 +1067,7 @@ impl TracksPanel {
         }
     }
 
-    fn handle_track_dnd(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn handle_track_dnd(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         let Some(drag_id) = self.dnd_dragging_track else {
             return;
         };
@@ -1164,7 +1164,7 @@ impl TracksPanel {
         }
     }
 
-    fn apply_track_action(&mut self, app: &mut super::app::YadawApp, action: &str, track_id: u64) {
+    fn apply_track_action(&mut self, app: &mut super::app::redawApp, action: &str, track_id: u64) {
         match action {
             "rename" => {
                 let current_name = {

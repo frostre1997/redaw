@@ -1,57 +1,57 @@
 use std::fmt;
 
 #[derive(Debug)]
-pub enum YadawError {
+pub enum redawError {
     Audio(String),
     Plugin(String),
     File(String),
     State(String),
 }
 
-impl fmt::Display for YadawError {
+impl fmt::Display for redawError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            YadawError::Audio(msg) => write!(f, "Audio error: {}", msg),
-            YadawError::Plugin(msg) => write!(f, "Plugin error: {}", msg),
-            YadawError::File(msg) => write!(f, "File error: {}", msg),
-            YadawError::State(msg) => write!(f, "State error: {}", msg),
+            redawError::Audio(msg) => write!(f, "Audio error: {}", msg),
+            redawError::Plugin(msg) => write!(f, "Plugin error: {}", msg),
+            redawError::File(msg) => write!(f, "File error: {}", msg),
+            redawError::State(msg) => write!(f, "State error: {}", msg),
         }
     }
 }
 
-impl std::error::Error for YadawError {}
+impl std::error::Error for redawError {}
 
-pub type Result<T> = std::result::Result<T, YadawError>;
+pub type Result<T> = std::result::Result<T, redawError>;
 
 // Add user-friendly message generation
-impl YadawError {
+impl redawError {
     /// Get a user-friendly title for this error
     pub fn title(&self) -> &str {
         match self {
-            YadawError::Audio(_) => "Audio Error",
-            YadawError::Plugin(_) => "Plugin Error",
-            YadawError::File(_) => "File Error",
-            YadawError::State(_) => "Application Error",
+            redawError::Audio(_) => "Audio Error",
+            redawError::Plugin(_) => "Plugin Error",
+            redawError::File(_) => "File Error",
+            redawError::State(_) => "Application Error",
         }
     }
 
     /// Get a user-friendly hint for resolving this error
     pub fn hint(&self) -> Option<&str> {
         match self {
-            YadawError::Audio(_) => Some("Check your audio device settings"),
-            YadawError::Plugin(_) => Some("Try bypassing the plugin or checking for updates"),
-            YadawError::File(_) => Some("Check file permissions and disk space"),
-            YadawError::State(_) => Some("Try restarting the application"),
+            redawError::Audio(_) => Some("Check your audio device settings"),
+            redawError::Plugin(_) => Some("Try bypassing the plugin or checking for updates"),
+            redawError::File(_) => Some("Check file permissions and disk space"),
+            redawError::State(_) => Some("Try restarting the application"),
         }
     }
 
     /// Get the detailed error message
     pub fn details(&self) -> &str {
         match self {
-            YadawError::Audio(msg)
-            | YadawError::Plugin(msg)
-            | YadawError::File(msg)
-            | YadawError::State(msg) => msg,
+            redawError::Audio(msg)
+            | redawError::Plugin(msg)
+            | redawError::File(msg)
+            | redawError::State(msg) => msg,
         }
     }
 
@@ -71,34 +71,34 @@ impl YadawError {
 }
 
 // Conversion helpers
-impl From<std::io::Error> for YadawError {
+impl From<std::io::Error> for redawError {
     fn from(err: std::io::Error) -> Self {
-        YadawError::File(err.to_string())
+        redawError::File(err.to_string())
     }
 }
 
-impl From<anyhow::Error> for YadawError {
+impl From<anyhow::Error> for redawError {
     fn from(err: anyhow::Error) -> Self {
-        YadawError::Plugin(err.to_string())
+        redawError::Plugin(err.to_string())
     }
 }
 
 // Builder pattern for creating detailed errors
-impl YadawError {
+impl redawError {
     pub fn audio(msg: impl Into<String>) -> Self {
-        YadawError::Audio(msg.into())
+        redawError::Audio(msg.into())
     }
 
     pub fn plugin(msg: impl Into<String>) -> Self {
-        YadawError::Plugin(msg.into())
+        redawError::Plugin(msg.into())
     }
 
     pub fn file(msg: impl Into<String>) -> Self {
-        YadawError::File(msg.into())
+        redawError::File(msg.into())
     }
 
     pub fn state(msg: impl Into<String>) -> Self {
-        YadawError::State(msg.into())
+        redawError::State(msg.into())
     }
 }
 
@@ -157,33 +157,33 @@ pub trait UserNotification {
 
 // Common error creation helpers
 pub mod common {
-    use super::YadawError;
+    use super::redawError;
 
-    pub fn project_save_failed(e: impl std::fmt::Display) -> YadawError {
-        YadawError::file(format!("Failed to save project: {}", e))
+    pub fn project_save_failed(e: impl std::fmt::Display) -> redawError {
+        redawError::file(format!("Failed to save project: {}", e))
     }
 
-    pub fn project_load_failed(e: impl std::fmt::Display) -> YadawError {
-        YadawError::file(format!("Failed to load project: {}", e))
+    pub fn project_load_failed(e: impl std::fmt::Display) -> redawError {
+        redawError::file(format!("Failed to load project: {}", e))
     }
 
-    pub fn audio_import_failed(path: &std::path::Path, e: impl std::fmt::Display) -> YadawError {
-        YadawError::file(format!("Failed to import {}: {}", path.display(), e))
+    pub fn audio_import_failed(path: &std::path::Path, e: impl std::fmt::Display) -> redawError {
+        redawError::file(format!("Failed to import {}: {}", path.display(), e))
     }
 
-    pub fn plugin_load_failed(name: &str, e: impl std::fmt::Display) -> YadawError {
-        YadawError::plugin(format!("Failed to load plugin '{}': {}", name, e))
+    pub fn plugin_load_failed(name: &str, e: impl std::fmt::Display) -> redawError {
+        redawError::plugin(format!("Failed to load plugin '{}': {}", name, e))
     }
 
-    pub fn plugin_process_error(name: &str, e: impl std::fmt::Display) -> YadawError {
-        YadawError::plugin(format!("Plugin '{}' processing error: {}", name, e))
+    pub fn plugin_process_error(name: &str, e: impl std::fmt::Display) -> redawError {
+        redawError::plugin(format!("Plugin '{}' processing error: {}", name, e))
     }
 
-    pub fn recording_error(e: impl std::fmt::Display) -> YadawError {
-        YadawError::audio(format!("Recording error: {}", e))
+    pub fn recording_error(e: impl std::fmt::Display) -> redawError {
+        redawError::audio(format!("Recording error: {}", e))
     }
 
-    pub fn playback_error(e: impl std::fmt::Display) -> YadawError {
-        YadawError::audio(format!("Playback error: {}", e))
+    pub fn playback_error(e: impl std::fmt::Display) -> redawError {
+        redawError::audio(format!("Playback error: {}", e))
     }
 }

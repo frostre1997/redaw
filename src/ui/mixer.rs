@@ -72,7 +72,7 @@ impl MixerWindow {
         self.visible = !self.visible;
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut visible = self.visible;
 
         let mut window = egui::Window::new("Mixer")
@@ -147,7 +147,7 @@ impl MixerWindow {
         });
     }
 
-    fn draw_mixer_channels(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_mixer_channels(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.horizontal(|ui| {
             let track_data: Vec<(u64, crate::model::track::Track)> = {
                 let state = app.state.lock().unwrap();
@@ -204,7 +204,7 @@ impl MixerWindow {
         track: &crate::model::track::Track,
         strip: &mut ChannelStrip,
         track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
         show_inserts: bool,
         show_eq: bool,
         show_sends: bool,
@@ -451,7 +451,7 @@ impl MixerWindow {
         });
     }
 
-    fn draw_master_strip(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_master_strip(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.allocate_ui(
             egui::vec2(self.strip_width * 1.5, ui.available_height()),
             |ui| {

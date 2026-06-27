@@ -1,4 +1,4 @@
-name: yadaw
+name: redaw
 base: core24
 version: '9.9.9' # Will be auto-updated
 summary: Rust-powered, plugin-first multiplatform DAW
@@ -10,12 +10,12 @@ grade: stable
 confinement: strict
 
 icon: snap/gui/icon.svg
-title: YADAW
+title: redaw
 license: AGPL-3.0
-contact: https://github.com/mlm-games/yadaw/issues
-website: https://github.com/mlm-games/yadaw
-source-code: https://github.com/mlm-games/yadaw
-issues: https://github.com/mlm-games/yadaw/issues
+contact: https://github.com/mlm-games/redaw/issues
+website: https://github.com/mlm-games/redaw
+source-code: https://github.com/mlm-games/redaw
+issues: https://github.com/mlm-games/redaw/issues
 donation: https://github.com/sponsors/mlm-games
 
 platforms:
@@ -23,8 +23,8 @@ platforms:
   arm64:
 
 apps:
-  yadaw:
-    command: yadaw
+  redaw:
+    command: redaw
     extensions: [gnome]
     plugs: 
       - home
@@ -38,7 +38,7 @@ apps:
       - x11
 
 parts:
-  yadaw:
+  redaw:
     plugin: dump
     source: ./builds/
     source-type: local
@@ -57,8 +57,8 @@ parts:
       - libsratom-0-0
     override-build: |
       craftctl default
-      chmod +x $CRAFT_PART_INSTALL/yadaw
+      chmod +x $CRAFT_PART_INSTALL/redaw
 
 layout:
-  /usr/share/yadaw:
-    bind: $SNAP/usr/share/yadaw
+  /usr/share/redaw:
+    bind: $SNAP/usr/share/redaw

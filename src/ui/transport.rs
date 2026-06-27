@@ -35,7 +35,7 @@ impl TransportUI {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         egui::TopBottomPanel::bottom("transport").show(ctx, |ui| {
             egui::ScrollArea::horizontal()
                 .id_salt("tbp_tool_strip")

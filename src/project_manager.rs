@@ -295,7 +295,7 @@ impl ProjectManager {
     }
 
     fn load_recent_projects() -> Vec<PathBuf> {
-        if let Some(dirs) = directories::ProjectDirs::from("com", "yadaw", "yadaw") {
+        if let Some(dirs) = directories::ProjectDirs::from("com", "redaw", "redaw") {
             let recent_file = dirs.config_dir().join("recent_projects.json");
             if recent_file.exists()
                 && let Ok(contents) = fs::read_to_string(recent_file)
@@ -308,7 +308,7 @@ impl ProjectManager {
     }
 
     fn save_recent_projects(&self) -> Result<()> {
-        if let Some(dirs) = directories::ProjectDirs::from("com", "yadaw", "yadaw") {
+        if let Some(dirs) = directories::ProjectDirs::from("com", "redaw", "redaw") {
             let recent_file = dirs.config_dir().join("recent_projects.json");
             fs::create_dir_all(dirs.config_dir())?;
             let json = serde_json::to_string_pretty(&self.recent_projects)?;

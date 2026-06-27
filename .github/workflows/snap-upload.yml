@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BIN_NAME: yadaw  # Set your binary name here
+  BIN_NAME: redaw  # Set your binary name here
 
 jobs:
   publish:
@@ -48,11 +48,11 @@ jobs:
           mkdir -p others/snap/builds others/snap/snap/gui
 
           # Copy desktop and icon files
-          cp others/flathub/io.github.mlm_games.yadaw.desktop others/snap/snap/gui/yadaw.desktop
+          cp others/flathub/io.github.mlm_games.redaw.desktop others/snap/snap/gui/redaw.desktop
           cp others/packaging/icon.svg others/snap/snap/gui/icon.svg
-          sed -i -e 's|^Exec=.*|Exec=yadaw|' \
+          sed -i -e 's|^Exec=.*|Exec=redaw|' \
                  -e 's|^Icon=.*|Icon=${SNAP}/meta/gui/icon.svg|' \
-                 others/snap/snap/gui/yadaw.desktop
+                 others/snap/snap/gui/redaw.desktop
 
           VERSION="${{ inputs.version_name }}"
           VERSION="${VERSION#v}"  # normalize

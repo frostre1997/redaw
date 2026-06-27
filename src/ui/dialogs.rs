@@ -21,13 +21,13 @@ use crate::messages::ExportState;
 use crate::model::track::TrackType;
 use crate::plugin::categorize_plugin;
 use crate::ui::theme;
-use yadaw_plugin_api::{BackendKind, HostConfig};
-use yadaw_plugin_host::HostFacade;
+use redaw_plugin_api::{BackendKind, HostConfig};
+use redaw_plugin_host::HostFacade;
 
 #[cfg(target_os = "android")]
-fn load_project_from_uri(app: &mut super::app::YadawApp, file: &PlatformFile) {
+fn load_project_from_uri(app: &mut super::app::redawApp, file: &PlatformFile) {
     let temp_name = format!(
-        "open_project_{}.yadaw",
+        "open_project_{}.redaw",
         chrono::Local::now().format("%Y%m%d_%H%M%S")
     );
     let temp_path = crate::paths::cache_dir().join(&temp_name);
@@ -43,15 +43,15 @@ fn load_project_from_uri(app: &mut super::app::YadawApp, file: &PlatformFile) {
 }
 
 #[cfg(not(target_os = "android"))]
-fn load_project_from_uri(_app: &mut super::app::YadawApp, _file: &PlatformFile) {
+fn load_project_from_uri(_app: &mut super::app::redawApp, _file: &PlatformFile) {
     unreachable!("load_project_from_uri should not be called on desktop");
 }
 
 #[cfg(target_os = "android")]
-fn save_project_to_uri(app: &mut super::app::YadawApp, file: &PlatformFile) {
+fn save_project_to_uri(app: &mut super::app::redawApp, file: &PlatformFile) {
     let uri = file.uri().unwrap_or("").to_string();
     let temp_name = format!(
-        "save_project_{}.yadaw",
+        "save_project_{}.redaw",
         chrono::Local::now().format("%Y%m%d_%H%M%S")
     );
     let temp_path = crate::paths::cache_dir().join(temp_name);
@@ -91,7 +91,7 @@ fn save_project_to_uri(app: &mut super::app::YadawApp, file: &PlatformFile) {
 }
 
 #[cfg(not(target_os = "android"))]
-fn save_project_to_uri(_app: &mut super::app::YadawApp, _file: &PlatformFile) {
+fn save_project_to_uri(_app: &mut super::app::redawApp, _file: &PlatformFile) {
     unreachable!("save_project_to_uri should not be called on desktop");
 }
 
@@ -106,7 +106,7 @@ macro_rules! simple_dialog {
                 Self { closed: false }
             }
 
-            pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+            pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
                 let mut open = true;
                 egui::Window::new($title)
                     .open(&mut open)
@@ -147,7 +147,7 @@ impl UserNotification for DialogManager {
 /// Base trait for all dialog implementations
 pub trait Dialog {
     /// Draw the dialog content (returns true if dialog should close)
-    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) -> bool;
+    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) -> bool;
 
     /// Get the dialog title
     fn title(&self) -> &str;
@@ -175,7 +175,7 @@ impl<T: Dialog> DialogWrapper<T> {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = !self.closed;
 
         let window = egui::Window::new(self.inner.title()).open(&mut open);
@@ -214,7 +214,7 @@ impl Dialog for MessageContent {
         "Message"
     }
 
-    fn draw_content(&mut self, ui: &mut egui::Ui, _app: &mut super::app::YadawApp) -> bool {
+    fn draw_content(&mut self, ui: &mut egui::Ui, _app: &mut super::app::redawApp) -> bool {
         ui.label(&self.message);
         ui.separator();
         let mut close = false;
@@ -255,7 +255,7 @@ impl Dialog for QuantizeContent {
         "Quantize"
     }
 
-    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) -> bool {
+    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) -> bool {
         ui.horizontal(|ui| {
             ui.label("Strength:");
             ui.add(
@@ -362,7 +362,7 @@ impl DialogManager {
         self.import_audio = Some(dlg);
     }
 
-    pub fn show_all(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show_all(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         // File dialogs
         if let Some(mut d) = self.open_dialog.take() {
             d.show(ctx, app);
@@ -567,7 +567,7 @@ impl OpenDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let _ = ctx;
 
         if self.picker_rx.is_none() {
@@ -618,7 +618,7 @@ impl SaveDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let _ = ctx;
 
         if self.picker_rx.is_none() {
@@ -627,12 +627,12 @@ impl SaveDialog {
                 .as_ref()
                 .and_then(|p| Path::new(p).file_name().and_then(|s| s.to_str()))
                 .map(ToOwned::to_owned)
-                .unwrap_or_else(|| "untitled.yadaw".to_string());
+                .unwrap_or_else(|| "untitled.redaw".to_string());
 
             self.picker_rx = Some(crate::file_picker::pick_save_file(
                 "Save Project",
                 &suggested,
-                "yadaw",
+                "redaw",
             ));
         }
 
@@ -694,7 +694,7 @@ impl PluginBrowserDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
 
         egui::Window::new("Plugin Browser")
@@ -873,7 +873,7 @@ impl PluginBrowserDialog {
 simple_dialog!(
     AudioSetupDialog,
     "Audio Setup",
-    |ui: &mut egui::Ui, _app: &mut super::app::YadawApp, closed: &mut bool| {
+    |ui: &mut egui::Ui, _app: &mut super::app::redawApp, closed: &mut bool| {
         ui.label("Audio configuration would be shown here");
         ui.label("(Not implemented yet)");
         ui.separator();
@@ -898,7 +898,7 @@ impl Dialog for TransposeContent {
         "Transpose"
     }
 
-    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) -> bool {
+    fn draw_content(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) -> bool {
         ui.horizontal(|ui| {
             ui.label("Semitones:");
             ui.add(
@@ -946,7 +946,7 @@ impl HumanizeDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
 
         egui::Window::new("Humanize")
@@ -1021,7 +1021,7 @@ impl ProjectSettingsDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         const SAMPLE_RATES: [u32; 6] = [22050, 44100, 48000, 88200, 96000, 192000];
         let mut open = true;
 
@@ -1120,7 +1120,7 @@ impl ProjectSettingsDialog {
 
                         if sample_rate_changed && active_rate != selected_rate {
                             app.dialogs.show_message(&format!(
-                                "Sample rate set to {} Hz. Restart YADAW to apply (current engine: {} Hz).",
+                                "Sample rate set to {} Hz. Restart redaw to apply (current engine: {} Hz).",
                                 selected_rate, active_rate
                             ));
                         }
@@ -1159,7 +1159,7 @@ impl ThemeEditorDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
 
         egui::Window::new("Theme Editor")
@@ -1688,7 +1688,7 @@ impl ExportDialog {
         self.state = Some(state);
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
 
         egui::Window::new("Export Audio")
@@ -1974,7 +1974,7 @@ impl PluginManagerDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut redawApp) {
         let mut open = true;
 
         egui::Window::new("Plugin Manager")
@@ -2150,7 +2150,7 @@ impl PluginManagerDialog {
         }
     }
 
-    fn perform_scan(&self, app: &mut YadawApp) {
+    fn perform_scan(&self, app: &mut redawApp) {
         if let Ok(mut config) = crate::config::Config::load() {
             config.paths.plugin_scan_paths = self
                 .scan_paths
@@ -2204,7 +2204,7 @@ impl ImportAudioDialog {
         self.opened = true;
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut redawApp) {
         if !self.opened {
             return;
         }
@@ -2293,7 +2293,7 @@ impl ImportAudioDialog {
         }
     }
 
-    fn import_file(&self, path: &Path, app: &mut YadawApp, _bpm: f64) {
+    fn import_file(&self, path: &Path, app: &mut redawApp, _bpm: f64) {
         app.open_file_from_path(path);
     }
 
@@ -2329,7 +2329,7 @@ struct SavedLayout {
 }
 
 impl SavedLayout {
-    fn capture(app: &super::app::YadawApp) -> Self {
+    fn capture(app: &super::app::redawApp) -> Self {
         Self {
             mixer_visible: app.mixer_ui.visible,
             timeline_show_automation: app.timeline_ui.show_automation,
@@ -2342,7 +2342,7 @@ impl SavedLayout {
         }
     }
 
-    fn apply(&self, app: &mut super::app::YadawApp) {
+    fn apply(&self, app: &mut super::app::redawApp) {
         app.mixer_ui.visible = self.mixer_visible;
         app.timeline_ui.show_automation = self.timeline_show_automation;
         app.timeline_ui.zoom_x = self.timeline_zoom_x.clamp(10.0, 200.0);
@@ -2430,7 +2430,7 @@ impl LayoutManagerDialog {
             .or(Some(0));
     }
 
-    fn apply_builtin_layout(idx: usize, app: &mut super::app::YadawApp) {
+    fn apply_builtin_layout(idx: usize, app: &mut super::app::redawApp) {
         match idx {
             0 => {
                 app.reset_layout();
@@ -2457,7 +2457,7 @@ impl LayoutManagerDialog {
         }
     }
 
-    fn load_custom_layout(name: &str, app: &mut super::app::YadawApp) -> Result<(), String> {
+    fn load_custom_layout(name: &str, app: &mut super::app::redawApp) -> Result<(), String> {
         let path = Self::layout_path(name);
         let text = std::fs::read_to_string(&path)
             .map_err(|e| format!("Failed to read layout '{}': {e}", path.display()))?;
@@ -2467,7 +2467,7 @@ impl LayoutManagerDialog {
         Ok(())
     }
 
-    fn save_current_layout(&mut self, app: &super::app::YadawApp) -> Result<String, String> {
+    fn save_current_layout(&mut self, app: &super::app::redawApp) -> Result<String, String> {
         let name = Self::sanitize_layout_name(&self.save_name_input);
         if name.is_empty() {
             return Err("Layout name cannot be empty.".to_string());
@@ -2516,7 +2516,7 @@ impl LayoutManagerDialog {
         Ok(name)
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
         let mut feedback: Option<String> = None;
 
@@ -2683,7 +2683,7 @@ impl TrackGroupingDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
 
         egui::Window::new("Track Grouping")
@@ -2933,7 +2933,7 @@ impl TrackRenameDialog {
         }
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut super::app::redawApp) {
         let mut open = true;
         egui::Window::new("Rename Track")
             .open(&mut open)

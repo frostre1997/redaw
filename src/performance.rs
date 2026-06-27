@@ -309,7 +309,7 @@ impl ProcessingThreadPool {
 
         let pool = rayon::ThreadPoolBuilder::new()
             .num_threads(num_threads)
-            .thread_name(|i| format!("yadaw-worker-{}", i))
+            .thread_name(|i| format!("redaw-worker-{}", i))
             .build()
             .unwrap();
 

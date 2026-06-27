@@ -37,7 +37,7 @@ pub struct ExportConfig {
     pub normalize: bool,
 }
 
-use yadaw_plugin_api::{BackendKind, ParamKind};
+use redaw_plugin_api::{BackendKind, ParamKind};
 
 /// Serializable param type tag for message passing
 #[derive(Debug, Clone)]

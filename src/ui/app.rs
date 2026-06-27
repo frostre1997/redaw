@@ -15,7 +15,7 @@ use crate::paths::{current_theme_path, custom_themes_path, shortcuts_path};
 use crate::performance::PerformanceMonitor;
 use crate::project::{AppState, AppStateSnapshot, ClipLocation};
 use crate::project_manager::ProjectManager;
-use yadaw_plugin_api::UnifiedPluginInfo;
+use redaw_plugin_api::UnifiedPluginInfo;
 
 use crate::track_manager::{TrackManager, UITrackType};
 use crate::transport::Transport;
@@ -34,7 +34,7 @@ pub enum ActiveEditTarget {
     Notes,
 }
 
-pub struct YadawApp {
+pub struct redawApp {
     // Core state
     pub(super) state: Arc<Mutex<AppState>>,
     pub(super) audio_state: Arc<AudioState>,
@@ -122,7 +122,7 @@ struct TouchState {
     tap_times: Vec<Instant>,
 }
 
-impl YadawApp {
+impl redawApp {
     pub fn new(
         state: Arc<Mutex<AppState>>,
         audio_state: Arc<AudioState>,
@@ -1805,7 +1805,7 @@ impl YadawApp {
             Some("mid") | Some("midi") => {
                 self.import_midi_file_to_new_track(path);
             }
-            Some("yadaw") => {
+            Some("redaw") => {
                 self.load_project_from_path(path);
             }
             Some("wav") | Some("flac") | Some("mp3") | Some("ogg") | Some("m4a") | Some("aac") => {
@@ -1986,7 +1986,7 @@ impl YadawApp {
     }
 }
 
-impl eframe::App for YadawApp {
+impl eframe::App for redawApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         let _ = ctx;
     }
@@ -2064,13 +2064,13 @@ impl eframe::App for YadawApp {
                     Some("mid") | Some("midi") => {
                         self.import_midi_file_to_new_track(path);
                     }
-                    Some("yadaw") | Some("ydw") => match std::env::current_exe() {
+                    Some("redaw") | Some("ydw") => match std::env::current_exe() {
                         Ok(exe) => match std::process::Command::new(&exe).arg(path).spawn() {
                             Ok(_) => {
-                                log::info!("Launched new YADAW instance for project: {:?}", path);
+                                log::info!("Launched new redaw instance for project: {:?}", path);
                             }
                             Err(e) => {
-                                log::error!("Failed to launch new YADAW instance: {}", e);
+                                log::error!("Failed to launch new redaw instance: {}", e);
                                 self.dialogs.show_error(&format!(
                                     "Failed to open project in new window: {}",
                                     e
@@ -2124,7 +2124,7 @@ impl eframe::App for YadawApp {
     }
 }
 
-impl Drop for YadawApp {
+impl Drop for redawApp {
     fn drop(&mut self) {
         let _ = self.input_manager.save_shortcuts(&shortcuts_path());
         let _ = self.theme_manager.save_custom_themes(&custom_themes_path());

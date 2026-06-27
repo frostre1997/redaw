@@ -12,16 +12,16 @@ use std::sync::{Arc, Mutex};
 #[cfg(not(target_arch = "wasm32"))]
 use crate::constants;
 #[cfg(not(target_arch = "wasm32"))]
-use yadaw_plugin_api::HostConfig;
+use redaw_plugin_api::HostConfig;
 #[cfg(all(not(target_arch = "wasm32"), not(feature = "lv2-legacy")))]
-use yadaw_plugin_host::HostFacade;
+use redaw_plugin_host::HostFacade;
 #[cfg(all(not(target_arch = "wasm32"), feature = "lv2-legacy"))]
-use yadaw_plugin_host::{HostFacade, legacy::init as plugin_host_init};
+use redaw_plugin_host::{HostFacade, legacy::init as plugin_host_init};
 
 #[cfg(target_os = "android")]
 use android_activity::AndroidApp;
 #[cfg(all(target_os = "android", feature = "lv2-legacy"))]
-use yadaw_plugin_host::plugin_host;
+use redaw_plugin_host::plugin_host;
 
 struct AppChannels {
     command_tx: Sender<AudioCommand>,
@@ -77,7 +77,7 @@ fn setup_channels_and_start_audio(
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn run_app() -> Result<(), Box<dyn std::error::Error>> {
     #[cfg(unix)]
-    yadaw_plugin_host::init_xlib_threads_early();
+    redaw_plugin_host::init_xlib_threads_early();
 
     // Logging
 
@@ -86,7 +86,7 @@ pub fn run_app() -> Result<(), Box<dyn std::error::Error>> {
 
     rlobkit_dialogs::init();
 
-    log::info!("Starting YADAW...");
+    log::info!("Starting redaw...");
 
     let file_to_open: Option<String> = std::env::args().nth(1).and_then(|arg| {
         let path = std::path::Path::new(&arg);
@@ -154,11 +154,11 @@ pub fn run_app() -> Result<(), Box<dyn std::error::Error>> {
     let initial_file = file_to_open.clone();
 
     eframe::run_native(
-        "Yadaw",
+        "redaw",
         native_options,
         Box::new(move |_cc| {
             let ui_midi_handler = channels.midi_handler.clone();
-            let mut app = ui::YadawApp::new(
+            let mut app = ui::redawApp::new(
                 app_state.clone(),
                 audio_state.clone(),
                 channels.command_tx.clone(),
@@ -188,10 +188,10 @@ pub fn run_app_android(app: AndroidApp) -> Result<(), Box<dyn std::error::Error>
     android_logger::init_once(
         android_logger::Config::default()
             .with_max_level(log::LevelFilter::Info)
-            .with_tag("yadaw"),
+            .with_tag("redaw"),
     );
 
-    log::info!("Starting YADAW...");
+    log::info!("Starting redaw...");
 
     // Load configuration
     let config = Config::load().unwrap_or_default();
@@ -250,11 +250,11 @@ pub fn run_app_android(app: AndroidApp) -> Result<(), Box<dyn std::error::Error>
     };
 
     eframe::run_native(
-        "Yadaw",
+        "redaw",
         native_options,
         Box::new(move |_cc| {
             let ui_midi_handler = channels.midi_handler.clone();
-            Ok(Box::new(ui::YadawApp::new(
+            Ok(Box::new(ui::redawApp::new(
                 app_state.clone(),
                 audio_state.clone(),
                 channels.command_tx.clone(),
@@ -270,7 +270,7 @@ pub fn run_app_android(app: AndroidApp) -> Result<(), Box<dyn std::error::Error>
 }
 
 #[cfg(target_arch = "wasm32")]
-pub fn create_app() -> ui::YadawApp {
+pub fn create_app() -> ui::redawApp {
     let config = Config::default();
     let app_state = Arc::new(Mutex::new(project::AppState::default()));
     let audio_state = Arc::new(AudioState::new());
@@ -289,7 +289,7 @@ pub fn create_app() -> ui::YadawApp {
         },
     );
 
-    ui::YadawApp::new(
+    ui::redawApp::new(
         app_state,
         audio_state,
         channels.command_tx,

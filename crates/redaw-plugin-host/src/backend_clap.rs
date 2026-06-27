@@ -47,7 +47,7 @@ mod clap_impl {
         }
     }
 
-    use yadaw_plugin_api::{
+    use redaw_plugin_api::{
         BackendKind, HostConfig, MidiEvent, ParamKey, ParamKind, PluginBackend,
         PluginInstance as UniInstance, ProcessCtx, UnifiedParamInfo, UnifiedPluginInfo,
     };
@@ -149,7 +149,7 @@ mod clap_impl {
 
     impl ClapHostBackend {
         pub fn new(cfg: HostConfig) -> Result<Self> {
-            let host_info = HostInfo::new("YADAW", "YADAW", "https://example.invalid", "0.1.0")?;
+            let host_info = HostInfo::new("redaw", "redaw", "https://example.invalid", "0.1.0")?;
             Ok(Self { cfg, host_info })
         }
 

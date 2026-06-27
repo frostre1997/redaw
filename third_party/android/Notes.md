@@ -8,7 +8,7 @@ export LILV_TERMUX_LIB=$(pwd)/third_party/android/termux/aarch64/sysroot/data/da
 
 ```toml
 [lib]
-name = "yadaw"
+name = "redaw"
 crate-type = ["cdylib"]
 ```
 

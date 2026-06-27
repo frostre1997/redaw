@@ -17,7 +17,7 @@
 - refactor plugin source and api to seperate crates
 - Update README.md
 - try to make a non-selly, and simple readme
-- Revise Yadaw description for clarity and focus
+- Revise redaw description for clarity and focus
 - Update README for clarity on app intentions
 - Fix link formatting for VSCO2 instruments in README
 - Fix AUR package name in README

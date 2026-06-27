@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use yadaw_plugin_api::BackendKind;
+use redaw_plugin_api::BackendKind;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PluginDescriptor {

@@ -55,9 +55,9 @@ pub async fn wasm_start() -> Result<(), wasm_bindgen::JsValue> {
     let web_options = eframe::WebOptions::default();
     let canvas = web_sys::window()
         .and_then(|w| w.document())
-        .and_then(|d| d.get_element_by_id("yadaw_canvas"))
+        .and_then(|d| d.get_element_by_id("redaw_canvas"))
         .and_then(|e| e.dyn_into::<web_sys::HtmlCanvasElement>().ok())
-        .expect("canvas#yadaw_canvas not found");
+        .expect("canvas#redaw_canvas not found");
 
     eframe::WebRunner::new()
         .start(
@@ -84,10 +84,10 @@ fn android_main(app: android_activity::AndroidApp) {
     android_logger::init_once(
         android_logger::Config::default()
             .with_max_level(log::LevelFilter::Info)
-            .with_tag("yadaw"),
+            .with_tag("redaw"),
     );
 
-    log::info!("Starting YADAW on Android...");
+    log::info!("Starting redaw on Android...");
 
     if let Ok(home) = crate::android_saf::files_dir_path() {
         unsafe {
@@ -96,9 +96,9 @@ fn android_main(app: android_activity::AndroidApp) {
             std::env::set_var("XDG_CACHE_HOME", &home);
             std::env::set_var("XDG_CONFIG_HOME", &home);
         }
-        log::info!("yadaw: set XDG_*/HOME to {}", home.display());
+        log::info!("redaw: set XDG_*/HOME to {}", home.display());
     } else {
-        log::warn!("yadaw: failed to resolve files dir; plugin storage may be read-only");
+        log::warn!("redaw: failed to resolve files dir; plugin storage may be read-only");
     }
 
     rlobkit_dialogs::init();

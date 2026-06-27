@@ -12,6 +12,6 @@ mod tracks;
 mod transport;
 mod waveform;
 
-pub use app::YadawApp;
+pub use app::redawApp;
 pub use color_picker::ColorPicker;
 pub use theme::{Theme, ThemeManager};

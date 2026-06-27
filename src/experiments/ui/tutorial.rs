@@ -1,4 +1,4 @@
-use super::app::YadawApp;
+use super::app::redawApp;
 use eframe::egui;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -40,7 +40,7 @@ impl InteractiveTutorial {
         self.active = false;
     }
 
-    pub fn show(&mut self, ctx: &egui::Context, app: &mut YadawApp) {
+    pub fn show(&mut self, ctx: &egui::Context, app: &mut redawApp) {
         if !self.active {
             return;
         }
@@ -63,13 +63,13 @@ impl InteractiveTutorial {
         self.check_step_completion(app);
     }
 
-    fn draw_step_content(&mut self, ui: &mut egui::Ui, app: &mut YadawApp) {
+    fn draw_step_content(&mut self, ui: &mut egui::Ui, app: &mut redawApp) {
         ui.heading(self.get_step_title());
         ui.separator();
 
         match self.current_step {
             TutorialStep::Welcome => {
-                ui.label("Welcome to YADAW! This tutorial will guide you through the basics.");
+                ui.label("Welcome to redaw! This tutorial will guide you through the basics.");
                 ui.label("");
                 ui.label("You'll learn how to:");
                 ui.label("• Add tracks");
@@ -237,7 +237,7 @@ impl InteractiveTutorial {
 
     fn get_step_title(&self) -> &str {
         match self.current_step {
-            TutorialStep::Welcome => "Welcome to YADAW!",
+            TutorialStep::Welcome => "Welcome to redaw!",
             TutorialStep::AddTrack => "Step 1: Add a Track",
             TutorialStep::RecordAudio => "Step 2: Record Audio",
             TutorialStep::AddMidiNotes => "Step 3: Create MIDI",
@@ -268,7 +268,7 @@ impl InteractiveTutorial {
         }
     }
 
-    fn check_step_completion(&mut self, app: &YadawApp) {
+    fn check_step_completion(&mut self, app: &redawApp) {
         match self.current_step {
             TutorialStep::AddTrack => {
                 // Auto-advance if tracks were added
@@ -289,15 +289,15 @@ impl InteractiveTutorial {
     }
 }
 
-// Add to YadawApp:
-impl YadawApp {
+// Add to redawApp:
+impl redawApp {
     pub fn start_tutorial(&mut self) {
         self.tutorial.start();
     }
 }
 
 // Add to menu bar:
-fn help_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+fn help_menu(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
     ui.menu_button("Help", |ui| {
         if ui.button("Interactive Tutorial").clicked() {
             app.start_tutorial();

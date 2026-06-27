@@ -26,10 +26,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BIN_NAME: yadaw
+  BIN_NAME: redaw
   CARGO_TERM_COLOR: always
-  APP_NAME: "YADAW"
-  APP_SLUG: "yadaw"
+  APP_NAME: "redaw"
+  APP_SLUG: "redaw"
   ANDROID_API: "36"
   ANDROID_BUILD_TOOLS: "36.0.0"
   ANDROID_NDK_VERSION: "28.2.13676358"
@@ -109,7 +109,7 @@ jobs:
           changelog-path: "CHANGELOG.md"
           version-file-path: "./fastlane/metadata/android/en-US/changelogs/${{ steps.bump.outputs.version_code }}.txt"
           version-code: "${{ steps.bump.outputs.version_code }}"
-          metainfo-path: "./others/flathub/io.github.mlm_games.yadaw.metainfo.xml" # TODO: Change here when copying
+          metainfo-path: "./others/flathub/io.github.mlm_games.redaw.metainfo.xml" # TODO: Change here when copying
           format: "- {{subject}}"
           exclude-patterns: "chore:,ci:,docs:,build:,Bump version,Merge pull request,[skip ci]"
           auto-commit: "false"

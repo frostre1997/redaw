@@ -24,11 +24,11 @@ jobs:
           # Try both with and without 'v' prefix for release tag
           DOWNLOADED=false
           for TAG in "v$VERSION" "$VERSION"; do
-            URL_X64="https://github.com/mlm-games/yadaw/releases/download/${TAG}/yadaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+            URL_X64="https://github.com/mlm-games/redaw/releases/download/${TAG}/redaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
             if curl --output /dev/null --silent --head --fail "$URL_X64"; then
-              wget -O "downloads/yadaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz" "$URL_X64"
-              wget -O "downloads/yadaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz" \
-                "https://github.com/mlm-games/yadaw/releases/download/${TAG}/yadaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz"
+              wget -O "downloads/redaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz" "$URL_X64"
+              wget -O "downloads/redaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz" \
+                "https://github.com/mlm-games/redaw/releases/download/${TAG}/redaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz"
               DOWNLOADED=true
               break
             fi
@@ -46,8 +46,8 @@ jobs:
           set -euo pipefail
           VERSION="${{ inputs.version_name }}"
           VERSION="${VERSION#v}"  # normalize: strip leading 'v' if present
-          X64_TARBALL="downloads/yadaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-          ARM64_TARBALL="downloads/yadaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz"
+          X64_TARBALL="downloads/redaw-${VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          ARM64_TARBALL="downloads/redaw-${VERSION}-aarch64-unknown-linux-gnu.tar.gz"
           X64_HASH=$(sha256sum "$X64_TARBALL" | cut -d ' ' -f 1)
           ARM64_HASH=$(sha256sum "$ARM64_TARBALL" | cut -d ' ' -f 1)
           echo "x64_hash=$X64_HASH"   >> "$GITHUB_OUTPUT"
@@ -63,28 +63,28 @@ jobs:
           mkdir -p aur-package
           cat > aur-package/PKGBUILD <<'EOF'
           # Maintainer: MLM-stuff <gfxoxinzh@mozmail.com>
-          pkgname=yadaw-bin
-          _pkgname=yadaw
+          pkgname=redaw-bin
+          _pkgname=redaw
           pkgver={{PKGVER}}
           _tag={{TAG}}
           pkgrel=1
           pkgdesc="Yet Another mini-DAW - a lightweight sfx tool in pure Rust (binary)"
           arch=('x86_64' 'aarch64')
-          url="https://github.com/mlm-games/yadaw"
+          url="https://github.com/mlm-games/redaw"
           license=('GPL3')
           depends=('alsa-lib' 'lilv' 'suil' 'sratom' 'libx11' 'libxcursor' 'libxinerama' 'libxrandr' 'libxi')
           optdepends=(
             'pipewire-pulse: for PipeWire audio support'
             'pulseaudio: for PulseAudio audio support'
           )
-          provides=('yadaw' 'clap-host' 'lv2-host')
-          conflicts=('yadaw')
+          provides=('redaw' 'clap-host' 'lv2-host')
+          conflicts=('redaw')
           options=('!strip')
 
-          source_x86_64=("${_pkgname}-${pkgver}-x86_64-unknown-linux-gnu.tar.gz::https://github.com/mlm-games/yadaw/releases/download/${_tag}/${_pkgname}-${pkgver}-x86_64-unknown-linux-gnu.tar.gz")
-          source_aarch64=("${_pkgname}-${pkgver}-aarch64-unknown-linux-gnu.tar.gz::https://github.com/mlm-games/yadaw/releases/download/${_tag}/${_pkgname}-${pkgver}-aarch64-unknown-linux-gnu.tar.gz")
+          source_x86_64=("${_pkgname}-${pkgver}-x86_64-unknown-linux-gnu.tar.gz::https://github.com/mlm-games/redaw/releases/download/${_tag}/${_pkgname}-${pkgver}-x86_64-unknown-linux-gnu.tar.gz")
+          source_aarch64=("${_pkgname}-${pkgver}-aarch64-unknown-linux-gnu.tar.gz::https://github.com/mlm-games/redaw/releases/download/${_tag}/${_pkgname}-${pkgver}-aarch64-unknown-linux-gnu.tar.gz")
 
-          source=("icon.png::https://raw.githubusercontent.com/mlm-games/yadaw/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png")
+          source=("icon.png::https://raw.githubusercontent.com/mlm-games/redaw/refs/heads/master/fastlane/metadata/android/en-US/images/icon.png")
 
           sha256sums_x86_64=('{{X64_HASH}}')
           sha256sums_aarch64=('{{ARM64_HASH}}')
@@ -103,7 +103,7 @@ jobs:
 
             install -Dm644 /dev/stdin "${pkgdir}/usr/share/applications/${_pkgname}.desktop" << DESKTOP_EOF
           [Desktop Entry]
-          Name=YADAW
+          Name=redaw
           Comment=A Sfx creation tool (maybe a little more than that)
           Exec=${_pkgname} %F
           Icon=${_pkgname}
@@ -127,7 +127,7 @@ jobs:
       - name: Publish to AUR
         uses: mlm-games/aur-deploy-action@master
         with:
-          pkgname: yadaw-bin
+          pkgname: redaw-bin
           pkgbuild: aur-package/PKGBUILD
           auto_pkgrel: 'true'
           commit_username: MLM-stuff

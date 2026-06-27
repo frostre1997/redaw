@@ -52,7 +52,7 @@ impl PianoRollView {
         }
     }
 
-    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.vertical(|ui| {
             // Header
             self.draw_header(ui, app);
@@ -165,7 +165,7 @@ impl PianoRollView {
         self.piano_roll.temp_selected_indices.clear();
     }
 
-    fn draw_piano_roll(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_piano_roll(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         if self.selected_clip.is_none() {
             ui.centered_and_justified(|ui| {
                 ui.label("Select or create a MIDI clip to edit");
@@ -331,7 +331,7 @@ impl PianoRollView {
         }
     }
 
-    fn draw_header(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_header(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         egui::ScrollArea::horizontal()
             .id_salt("pr_tool_strip")
             .scroll_source(ScrollSource::ALL)
@@ -530,7 +530,7 @@ impl PianoRollView {
         &mut self,
         ui: &mut egui::Ui,
         lane_rect: egui::Rect,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         let painter = ui.painter_at(lane_rect);
         painter.rect_filled(lane_rect, 0.0, egui::Color32::from_gray(15));

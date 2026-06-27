@@ -12,8 +12,8 @@ use crate::mixer::ChannelStrip;
 use crate::model::clip::AudioClip;
 use crate::model::track::TrackType;
 use crate::time_utils::TimeConverter;
-use yadaw_plugin_api::{BackendKind, HostConfig, ParamKey, ProcessCtx, RtMidiEvent};
-use yadaw_plugin_host::HostFacade;
+use redaw_plugin_api::{BackendKind, HostConfig, ParamKey, ProcessCtx, RtMidiEvent};
+use redaw_plugin_host::HostFacade;
 
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use dashmap::DashMap;
@@ -25,7 +25,7 @@ use std::sync::Arc;
 use std::sync::atomic::Ordering;
 use web_time::Instant;
 
-use yadaw_plugin_api::PluginInstance as UnifiedInstance;
+use redaw_plugin_api::PluginInstance as UnifiedInstance;
 
 type PluginInstanceHandle = (usize, u64);
 struct PluginCell(Arc<parking_lot::Mutex<Box<dyn UnifiedInstance>>>);

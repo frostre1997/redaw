@@ -1,10 +1,12 @@
-## Yadaw 
+## redaw 
+
+Forked from yadaw | Maintained by frostre1997 
 
 A basic daw for sound effects (works on Android too, but not as functional). Is also pretty lightweight (<20mb)
 
 Current intention is to not fill the app with patches for outdated/non-standardised parts, and to keep it minimal; helps refactoring later on, might implement a plugin system like blender if needed (for example, midi controller lanes feature could be implemented as a plugin, etc..)
 
-<img src="others/assets/demo.gif" align="center">
+![Demo di Redaw](others/assets/demo.gif)
 
 ### Build from source
 #### Desktop
@@ -40,8 +42,8 @@ The video uses [VSCO2](https://versilian-studios.com/vsco-community) pack's inst
 
 | Platform    | Version |
 |-------------|---------|
-| AUR         | [![AUR Version](https://img.shields.io/aur/version/yadaw-bin)](https://aur.archlinux.org/packages/yadaw-bin) |
-| Flathub    | [![Flathub Version](https://img.shields.io/flathub/v/io.github.mlm_games.yadaw)](https://flathub.org/apps/io.github.mlm_games.yadaw) |
+| AUR         | [![AUR Version](https://img.shields.io/aur/version/redaw-bin)](https://aur.archlinux.org/packages/redaw-bin) |
+| Flathub    | [![Flathub Version](https://img.shields.io/flathub/v/io.github.mlm_games.redaw)](https://flathub.org/apps/io.github.mlm_games.redaw) |
 
 ### License
 

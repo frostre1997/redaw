@@ -48,7 +48,7 @@ pub fn projects_dir() -> PathBuf {
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn projects_dir() -> PathBuf {
     let dirs =
-        directories::ProjectDirs::from("com", "yadaw", "yadaw").expect("ProjectDirs available");
+        directories::ProjectDirs::from("com", "redaw", "redaw").expect("ProjectDirs available");
     let p = dirs.data_dir().join("projects");
     let _ = std::fs::create_dir_all(&p);
     p
@@ -63,7 +63,7 @@ pub fn config_path() -> PathBuf {
 
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn config_path() -> PathBuf {
-    directories::ProjectDirs::from("com", "yadaw", "yadaw")
+    directories::ProjectDirs::from("com", "redaw", "redaw")
         .unwrap()
         .config_dir()
         .join("config.json")
@@ -78,7 +78,7 @@ pub fn cache_dir() -> PathBuf {
 
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn cache_dir() -> PathBuf {
-    directories::ProjectDirs::from("com", "yadaw", "yadaw")
+    directories::ProjectDirs::from("com", "redaw", "redaw")
         .unwrap()
         .cache_dir()
         .to_path_buf()
@@ -111,7 +111,7 @@ pub fn presets_dir() -> PathBuf {
 
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn presets_dir() -> PathBuf {
-    if let Some(dirs) = directories::ProjectDirs::from("com", "yadaw", "yadaw") {
+    if let Some(dirs) = directories::ProjectDirs::from("com", "redaw", "redaw") {
         let dir = dirs.config_dir().join("presets");
         let _ = std::fs::create_dir_all(&dir);
         dir
@@ -129,7 +129,7 @@ pub fn files_dir_pathbuf() -> PathBuf {
 
 #[cfg(all(not(target_os = "android"), not(target_arch = "wasm32")))]
 pub fn config_root_dir() -> PathBuf {
-    directories::ProjectDirs::from("com", "yadaw", "yadaw")
+    directories::ProjectDirs::from("com", "redaw", "redaw")
         .unwrap()
         .config_dir()
         .to_path_buf()

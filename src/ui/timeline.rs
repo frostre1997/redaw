@@ -124,7 +124,7 @@ impl TimelineView {
         }
     }
 
-    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    pub fn show(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         ui.heading("Timeline");
         self.draw_toolbar(ui, app);
         ui.separator();
@@ -143,7 +143,7 @@ impl TimelineView {
         }
     }
 
-    fn draw_toolbar(&mut self, ui: &mut egui::Ui, _app: &super::app::YadawApp) {
+    fn draw_toolbar(&mut self, ui: &mut egui::Ui, _app: &super::app::redawApp) {
         egui::ScrollArea::horizontal()
             .id_salt("tl_tool_strip")
             .scroll_source(ScrollSource::MOUSE_WHEEL)
@@ -205,7 +205,7 @@ impl TimelineView {
             });
     }
 
-    fn draw_timeline(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_timeline(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         self.automation_hit_regions.clear();
         self.last_track_blocks.clear();
 
@@ -451,7 +451,7 @@ impl TimelineView {
         rect: egui::Rect,
         track: &Track,
         track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         let track_color = track.color;
 
@@ -503,7 +503,7 @@ impl TimelineView {
         track_rect: egui::Rect,
         clip: &AudioClip,
         _track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
         track_color: Option<(u8, u8, u8)>,
     ) {
         let clip_x = clip.start_beat as f32 * self.zoom_x - self.scroll_x;
@@ -738,7 +738,7 @@ impl TimelineView {
         &self,
         painter: &egui::Painter,
         rect: egui::Rect,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
     ) {
         if !app.audio_state.loop_enabled.load(Ordering::Relaxed) {
             return;
@@ -780,7 +780,7 @@ impl TimelineView {
         track_rect: egui::Rect,
         clip: &crate::model::clip::MidiClip,
         track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
         track_color: Option<(u8, u8, u8)>,
     ) {
         // Compute clip rectangle
@@ -985,7 +985,7 @@ impl TimelineView {
         clip_id: u64,
         ui: &mut egui::Ui,
         clip_rect: egui::Rect,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         if ui.input(|i| i.key_down(egui::Key::Space)) {
             return;
@@ -1146,7 +1146,7 @@ impl TimelineView {
         response: &egui::Response,
         ruler_resp: &egui::Response,
         ui: &mut egui::Ui,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         if self.timeline_interaction.is_none() {
             if let Some(pos) = ui.ctx().input(|i| i.pointer.interact_pos()) {
@@ -1730,7 +1730,7 @@ impl TimelineView {
         track_rect: egui::Rect,
         track: &Track,
         track_id: u64,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
     ) {
         const HEADER_H: f32 = 22.0;
 
@@ -1899,7 +1899,7 @@ impl TimelineView {
         }
     }
 
-    fn update_auto_scroll(&mut self, app: &super::app::YadawApp) {
+    fn update_auto_scroll(&mut self, app: &super::app::redawApp) {
         let position = app.audio_state.get_position();
         let sample_rate = app.audio_state.sample_rate.load();
         let bpm = app.audio_state.bpm.load();
@@ -1921,7 +1921,7 @@ impl TimelineView {
         }
     }
 
-    fn draw_context_menus(&mut self, ui: &mut egui::Ui, app: &mut super::app::YadawApp) {
+    fn draw_context_menus(&mut self, ui: &mut egui::Ui, app: &mut super::app::redawApp) {
         if !self.show_clip_menu {
             return;
         }
@@ -2062,7 +2062,7 @@ impl TimelineView {
         }
     }
 
-    pub fn compute_project_end_beats(&self, app: &super::app::YadawApp) -> f64 {
+    pub fn compute_project_end_beats(&self, app: &super::app::redawApp) -> f64 {
         let state = app.state.lock().unwrap();
         state
             .tracks
@@ -2105,7 +2105,7 @@ impl TimelineView {
         ui: &egui::Ui,
         _rect: egui::Rect,
         beat: f64,
-        app: &super::app::YadawApp,
+        app: &super::app::redawApp,
         track_filter: Option<u64>,
     ) -> (f64, Option<f64>) {
         // Shift disables snapping
@@ -2200,7 +2200,7 @@ impl TimelineView {
         }
     }
 
-    fn draw_drag_ghosts(&self, ui: &mut egui::Ui, app: &super::app::YadawApp, rect: egui::Rect) {
+    fn draw_drag_ghosts(&self, ui: &mut egui::Ui, app: &super::app::redawApp, rect: egui::Rect) {
         if let Some(TimelineInteraction::DragClip {
             clip_ids_and_starts,
             start_drag_beat,
@@ -2300,7 +2300,7 @@ impl TimelineView {
         }
     }
 
-    fn handle_keyboard_nudge(&mut self, ui: &egui::Ui, app: &mut super::app::YadawApp) {
+    fn handle_keyboard_nudge(&mut self, ui: &egui::Ui, app: &mut super::app::redawApp) {
         if app.selected_clips.is_empty() {
             return;
         }
@@ -2483,7 +2483,7 @@ impl TimelineView {
     fn draw_resize_previews(
         &self,
         ui: &mut egui::Ui,
-        app: &mut super::app::YadawApp,
+        app: &mut super::app::redawApp,
         rect: egui::Rect,
     ) {
         if let Some(pos) = ui.ctx().input(|i| i.pointer.interact_pos()) {

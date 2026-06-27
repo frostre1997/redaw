@@ -5,7 +5,7 @@ use std::sync::atomic::{AtomicBool, AtomicU32, AtomicU64, Ordering};
 
 use crate::constants::DEFAULT_LOOP_LEN;
 use crate::model::track::TrackType;
-use yadaw_plugin_api::BackendKind;
+use redaw_plugin_api::BackendKind;
 
 pub struct AtomicF64 {
     storage: AtomicU64,

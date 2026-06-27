@@ -3,10 +3,10 @@ use anyhow::{Result, anyhow};
 use crate::messages::AudioCommand;
 use crate::model::plugin::PluginDescriptor;
 #[cfg(feature = "lv2-legacy")]
-use yadaw_plugin_api::BackendKind;
-use yadaw_plugin_api::UnifiedPluginInfo;
+use redaw_plugin_api::BackendKind;
+use redaw_plugin_api::UnifiedPluginInfo;
 #[cfg(feature = "lv2-legacy")]
-use yadaw_plugin_host::legacy::{PluginInfo, get_available_plugins, with_host};
+use redaw_plugin_host::legacy::{PluginInfo, get_available_plugins, with_host};
 
 pub struct ControlPortRange {
     pub min: f32,

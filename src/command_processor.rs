@@ -16,7 +16,7 @@ use crate::model::{AutomationPoint, MidiClip, MidiNote, PluginDescriptor, TrackG
 use crate::plugin::{create_plugin_instance, get_control_port_info};
 use crate::project::{AppState, ClipLocation, ClipRef};
 use crate::time_utils::quick::samples_to_beats;
-use yadaw_plugin_api::BackendKind;
+use redaw_plugin_api::BackendKind;
 
 pub async fn run_command_processor(
     app_state: Arc<std::sync::Mutex<AppState>>,

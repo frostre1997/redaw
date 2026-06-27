@@ -14,7 +14,7 @@ pub struct MidiInputHandler {
 
 impl MidiInputHandler {
     pub fn new(command_tx: Sender<crate::messages::AudioCommand>) -> Result<Self> {
-        let midi_in = MidiInput::new("YADAW-MIDI-Input")?;
+        let midi_in = MidiInput::new("redaw-MIDI-Input")?;
         Ok(Self {
             midi_in: Arc::new(Mutex::new(midi_in)),
             connection: Arc::new(Mutex::new(None)),
@@ -37,7 +37,7 @@ impl MidiInputHandler {
                 .clone()
         };
 
-        let mut midi_in_for_connection = MidiInput::new(&format!("YADAW-conn-{}", port_name))?;
+        let mut midi_in_for_connection = MidiInput::new(&format!("redaw-conn-{}", port_name))?;
         // Disable unnecessary logging from this temporary instance.
         midi_in_for_connection.ignore(Ignore::All);
 
